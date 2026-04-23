@@ -7,6 +7,22 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 
+[manifest]
+members = [
+    "diny",
+]
+
+[manifest.dependency-groups]
+dev = [
+    { name = "diny", editable = "packages/diny" },
+    { name = "poethepoet", specifier = ">=0.37.0" },
+    { name = "pytest", specifier = ">=8.4.2" },
+    { name = "pyyaml", marker = "python_full_version >= '3.11'" },
+    { name = "ruff", specifier = ">=0.15.11" },
+    { name = "ty", specifier = ">=0.0.32" },
+    { name = "uv-release", marker = "python_full_version >= '3.11'" },
+]
+
 [[package]]
 name = "annotated-types"
 version = "0.7.0"
@@ -122,31 +138,7 @@ wheels = [
 [[package]]
 name = "diny"
 version = "0.1.0"
-source = { editable = "." }
-
-[package.dev-dependencies]
-dev = [
-    { name = "poethepoet", version = "0.37.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "poethepoet", version = "0.44.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "pytest", version = "8.4.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "pytest", version = "9.0.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "pyyaml", marker = "python_full_version >= '3.11'" },
-    { name = "ruff" },
-    { name = "ty" },
-    { name = "uv-release", marker = "python_full_version >= '3.11'" },
-]
-
-[package.metadata]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "poethepoet", specifier = ">=0.37.0" },
-    { name = "pytest", specifier = ">=8.4.2" },
-    { name = "pyyaml", marker = "python_full_version >= '3.11'" },
-    { name = "ruff", specifier = ">=0.15.11" },
-    { name = "ty", specifier = ">=0.0.32" },
-    { name = "uv-release", marker = "python_full_version >= '3.11'" },
-]
+source = { editable = "packages/diny" }
 
 [[package]]
 name = "exceptiongroup"
