@@ -2,7 +2,7 @@
 
 import asyncio
 
-from diny import Singleton, aresolve, inject, provide, resolve, singleton
+from diny import Factory, Singleton, aresolve, inject, provide, resolve, singleton
 
 
 class Config:
@@ -99,5 +99,53 @@ def test_aresolve_respects_provide():
         async with aprovide(custom):
             cfg = await aresolve(Config)
             assert cfg.url == "async-custom"
+
+    asyncio.run(main())
+
+
+# --- Annotated resolve ---
+
+
+def test_resolve_factory(di):
+    a = resolve(Factory[Config])
+    b = resolve(Factory[Config])
+    assert a is not b
+    assert isinstance(a, Config)
+
+
+def test_resolve_singleton_annotation(di):
+    a = resolve(Singleton[Config])
+    b = resolve(Singleton[Config])
+    assert a is b
+
+
+def test_resolve_factory_vs_singleton(di):
+    s = resolve(Singleton[Config])
+    f = resolve(Factory[Config])
+    assert s is not f
+    # singleton still cached
+    assert resolve(Singleton[Config]) is s
+
+
+def test_aresolve_factory():
+    async def main():
+        from diny import aprovide
+
+        async with aprovide():
+            a = await aresolve(Factory[Config])
+            b = await aresolve(Factory[Config])
+            assert a is not b
+
+    asyncio.run(main())
+
+
+def test_aresolve_singleton_annotation():
+    async def main():
+        from diny import aprovide
+
+        async with aprovide():
+            a = await aresolve(Singleton[Config])
+            b = await aresolve(Singleton[Config])
+            assert a is b
 
     asyncio.run(main())

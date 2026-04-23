@@ -222,14 +222,25 @@ def inject(func):
 def resolve(tp):
     """Return the instance for *tp* within the current scope.
 
-    Uses singleton semantics: the result is cached for the current scope.
+    Accepts bare types, ``Singleton[T]``, or ``Factory[T]``.
+    Bare types use singleton semantics by default.
     """
+    info = _unwrap(tp)
+    if info is not None:
+        real_tp, is_factory = info
+        _resolve_deferred(real_tp)
+        return _resolve(real_tp, is_factory)
     _resolve_deferred(tp)
     return _resolve(tp)
 
 
 async def aresolve(tp):
     """Async variant of :func:`resolve`."""
+    info = _unwrap(tp)
+    if info is not None:
+        real_tp, is_factory = info
+        _resolve_deferred(real_tp)
+        return await _aresolve(real_tp, is_factory)
     _resolve_deferred(tp)
     return await _aresolve(tp)
 
