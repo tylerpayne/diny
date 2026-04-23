@@ -8,9 +8,9 @@ Dead simple dependency injection for Python.
 pip install diny
 ```
 
-## Just works
+## Works with your existing code
 
-Drop in `@singleton` / `@inject` and delete your orchestration, lifecycle, and wiring code:
+Drop in `@singleton` / `@inject` and delete your glue code:
 
 ```diff
 +from diny import inject, singleton
@@ -29,7 +29,7 @@ Drop in `@singleton` / `@inject` and delete your orchestration, lifecycle, and w
  def list_users(db: Database):
      return db.query("SELECT * FROM users")
 
--# Lots of lines of orchestration and lifecycle code
+-# Lots of lines of glue code
 -config = ...
 -db = ...
 -
@@ -37,7 +37,7 @@ Drop in `@singleton` / `@inject` and delete your orchestration, lifecycle, and w
 +list_users()   # Config and Database built on first call, cached after
 ```
 
-No `provide()` needed — the cache is process-wide until you scope it.
+The cache is process-wide until you [scope it](#providers).
 
 ## Decorators
 
@@ -93,7 +93,7 @@ Undecorated classes without a site annotation are passed through to the caller. 
 
 ## Providers
 
-Open a scope with `provide()` to override any dep — classes, instances, or factory functions:
+Open a scope with `provide()` to override any dependency — classes, instances, or factory functions:
 
 ```python
 from diny import provide
@@ -102,11 +102,13 @@ class FakeDatabase(Database):
     def __init__(self, config: Config):
         self.fake = True
 
+# Concrete subclass of type
 with provide(Database=FakeDatabase):
-    list_users()                     # uses FakeDatabase
+    list_users()
 
+# Infer type from instance
 with provide(Config(url="test://")):
-    list_users()                     # uses this Config instance
+    list_users()
 ```
 
 A provider can be a function — its own typed deps get injected too:
