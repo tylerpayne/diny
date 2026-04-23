@@ -4,19 +4,44 @@ Dependency injection in 180 lines. Annotations, not containers.
 
 ## Just works
 
-```python
-from tinydi import inject, Singleton
+Before — manual wiring:
 
+```python
 class Config:
     def __init__(self):
         self.url = "postgres://localhost"
 
 class Database:
-    def __init__(self, config: Singleton[Config]):
+    def __init__(self, config: Config):
+        self.conn = connect(config.url)
+
+def list_users(db: Database):
+    return db.query("SELECT * FROM users")
+
+# Lots of lines of orchestration and lifecycle code
+config = ...
+db = ...
+
+list_users(db)
+```
+
+After — drop in `@singleton` / `@inject`:
+
+```python
+from tinydi import inject, singleton
+
+@singleton
+class Config:
+    def __init__(self):
+        self.url = "postgres://localhost"
+
+@singleton
+class Database:
+    def __init__(self, config: Config):
         self.conn = connect(config.url)
 
 @inject
-def list_users(db: Singleton[Database]):
+def list_users(db: Database):
     return db.query("SELECT * FROM users")
 
 list_users()   # Config and Database built on first call, cached after
