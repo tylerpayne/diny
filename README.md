@@ -126,14 +126,17 @@ with provide(Config(url="test://")):
     list_users()                     # uses this Config instance
 ```
 
-Scopes nest:
+Scopes nest. Use `inherit=True` to keep the parent's cached instances while overriding specific deps:
 
 ```python
 with provide(Config(url="prod")):
-    handler()                          # prod
+    handler()                          # prod config, fresh database
+
+    with provide(Database=AdminDB, inherit=True):
+        handler()                      # admin database, same config instance
+
     with provide(Config(url="test")):
-        handler()                      # test
-    handler()                          # prod again
+        handler()                      # test config, fresh everything
 ```
 
 ### Async

@@ -16,7 +16,7 @@ dev = [
     { name = "pyyaml", marker = "python_full_version >= '3.11'" },
     { name = "ruff", specifier = ">=0.15.11" },
     { name = "ty", specifier = ">=0.0.32" },
-    { name = "uv-release", specifier = ">=0.29.2" },
+    { name = "uv-release", specifier = "==0.30.0a3" },
     { name = "uv-release", marker = "python_full_version >= '3.11'" },
 ]
 
@@ -119,7 +119,7 @@ wheels = [
 
 [[package]]
 name = "diny"
-version = "0.2.3.dev0"
+version = "0.3.1.dev0"
 source = { editable = "packages/diny" }
 
 [package.dev-dependencies]
@@ -608,16 +608,18 @@ wheels = [
 
 [[package]]
 name = "uv-release"
-version = "0.29.2"
+version = "0.30.0a3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
+    { name = "diny" },
     { name = "packaging" },
     { name = "pydantic" },
     { name = "pygit2" },
+    { name = "pyyaml" },
     { name = "tomlkit" },
 ]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1f/9b/8aa2ae731eafb75d49bb4a332015e4b4ae90a441972859dfe053839206fd/uv_release-0.29.2-py3-none-any.whl", hash = "sha256:98650f23b8169c570efd1efdf315fcd5aaf82403e7c22941717e870864b5bed4", size = 83383, upload-time = "2026-04-23T21:19:03.935Z" },
+    { url = "https://files.pythonhosted.org/packages/ea/b3/23e15c421957b916aac3d02b58166b578bb3b6fcfbde532b4c514a81dbee/uv_release-0.30.0a3-py3-none-any.whl", hash = "sha256:f0a751f6121f9a61cf90082702d386dd4aa034662d36ae7ce8010c58182842dc", size = 92199, upload-time = "2026-04-27T22:00:01.59Z" },
 ]
 
 [[package]]
