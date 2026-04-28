@@ -2,10 +2,13 @@
 
 [![PyPI](https://img.shields.io/pypi/v/diny)](https://pypi.org/project/diny/)
 
-Dead simple dependency injection for Python.
-
-```bash
-pip install diny
+```
+       __      
+  .^^^/o_)   Dead simple         
+ / ____/     dependency injection
+</|_|_|      in Python           
+                                 
+$ pip install diny               
 ```
 
 ## Works with your existing code
