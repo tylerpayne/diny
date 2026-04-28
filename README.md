@@ -1,11 +1,11 @@
 ```
-diny
+             diny
        __      
   .^^^/o_)   dead simple         
  / ____/     dependency injection
 </|_|_|      in python           
-                                 
-$ pip install diny               
+                            
+             $ pip install diny               
 ```
 
 [![PyPI](https://img.shields.io/pypi/v/diny)](https://pypi.org/project/diny/)
